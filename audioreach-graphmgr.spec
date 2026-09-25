@@ -2,7 +2,7 @@
 
 Name:           audioreach-graphmgr
 Version:        1.0.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        AudioReach Audio Graph Manager libraries
 License:        BSD-3-Clause-Clear
 URL:            https://github.com/AudioReach/audioreach-graphmgr
@@ -55,17 +55,21 @@ find %{buildroot} -name '*.la' -delete
 %files
 %license LICENSE
 %config(noreplace) %{_sysconfdir}/backend_conf.xml
-%{_libdir}/libagm.so*
-%{_libdir}/libsndcardparser.so*
+%{_libdir}/libagm.so.*
+%{_libdir}/libsndcardparser.so.*
+%{_libdir}/libagmmixer.so.*
+# tinyalsa PCM/mixer plugins are dlopen'd by unversioned name; loadable .so stays here
 %{_libdir}/libagm_pcm_plugin.so*
 %{_libdir}/libagm_mixer_plugin.so*
-%{_libdir}/libagmmixer.so*
 %{_bindir}/agmplay
 %{_bindir}/agmcap
 
 %files devel
 %{_includedir}/agm/
 %{_includedir}/sndparser/
+%{_libdir}/libagm.so
+%{_libdir}/libsndcardparser.so
+%{_libdir}/libagmmixer.so
 %{_libdir}/pkgconfig/agm.pc
 %{_libdir}/pkgconfig/sndparser.pc
 %{_libdir}/pkgconfig/agmplugin.pc
@@ -73,5 +77,11 @@ find %{buildroot} -name '*.la' -delete
 %{_libdir}/pkgconfig/agmalsaplugin.pc
 
 %changelog
+* Fri Sep 25 2026 Chiluka Rohith <rchiluka@qti.qualcomm.com> - 1.0.1-2
+- Move unversioned libagm.so, libsndcardparser.so, libagmmixer.so symlinks
+  to -devel; they are link-time only and unused at runtime
+- Keep libagm_pcm_plugin.so and libagm_mixer_plugin.so in main: tinyalsa
+  dlopen's them by their unversioned name at runtime
+
 * Fri Aug 14 2026 Qualcomm Linux <quic_linux@quicinc.com> - 1.0.1-1
 - Initial RPM packaging of audioreach-graphmgr version 1.0.1
