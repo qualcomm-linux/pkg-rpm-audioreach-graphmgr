@@ -1,10 +1,10 @@
 %global debug_package %{nil}
 
 Name:           audioreach-graphmgr
-Version:        1.0.1
-Release:        3%{?dist}
+Version:        1.1.1
+Release:        1%{?dist}
 Summary:        AudioReach Audio Graph Manager libraries
-License:        BSD-3-Clause-Clear
+License:        BSD-3-Clause
 URL:            https://github.com/AudioReach/audioreach-graphmgr
 Source0:        %{url}/archive/refs/tags/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
@@ -77,6 +77,11 @@ find %{buildroot} -name '*.la' -delete
 %{_libdir}/pkgconfig/agmalsaplugin.pc
 
 %changelog
+* Tue Oct 27 2026 Febin Francis <ffrancis@qti.qualcomm.com> - 1.1.1-1
+- Update to 1.1.1
+- Link against gsl, ar_osal and ats via pkg-config
+- Relicense Qualcomm changes to BSD-3-Clause
+
 * Thu Oct 02 2026 Chiluka Rohith <rchiluka@qti.qualcomm.com> - 1.0.1-3
 - Ship libsndcardparser.so in main; tinyalsa dlopen's it at runtime
 
